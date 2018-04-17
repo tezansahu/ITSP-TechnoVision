@@ -12,8 +12,8 @@ We would like to start for a small classroom with not many students to test this
 ## TEAM TechnoVision:
 <pre>
 <ul type="">
-<li>Shaurya Sarna 170100040	shauryasarna99@gmail.com
-<li>Shubham Varnkar 170100027	shubhamvarankar05@gmail.com
-<li>Tezan Sahu  170100035	tezansahu@gmail.com
-<li>Tushar Agrawal  170100075	tusharagrawalkps@gmail.com
+<li>Shaurya Sarna
+<li>Shubham Varnkar
+<li>Tezan Sahu
+<li>Tushar Agrawal
 </pre>
