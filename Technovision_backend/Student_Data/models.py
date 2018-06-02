@@ -1,6 +1,6 @@
 from django.db import models
 
-class Students(models.Model):
+class Student(models.Model):
     Student_Name = models.CharField(max_length=250)
     Roll_No = models.CharField(max_length=10)
     Branch = models.CharField(max_length=100)
@@ -9,6 +9,6 @@ class Students(models.Model):
         return self.Student_Name + ' - ' +self.Roll_No
         
 
-class Courses(models.Model):
-    students = models.ForeignKey(Students, on_delete=models.CASCADE)
+class Course(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
