@@ -1,8 +1,8 @@
 from django.shortcuts import render
 #from django.http import HttpResponse
 from rest_framework import viewsets
-from .models import Student, Course, MA106, MA106_Date
-from .serializers import StudentSerializer, CourseSerializer, MA106Serializer, MA106_DateSerializer
+from .models import Student, Course, MA106
+from .serializers import StudentSerializer, CourseSerializer, MA106Serializer
 
 class StudentView(viewsets.ModelViewSet):
     queryset = Student.objects.all()
@@ -19,10 +19,6 @@ class MA106View(viewsets.ModelViewSet):
     
     serializer_class = MA106Serializer
 
-class MA106_DateView(viewsets.ModelViewSet):
-    queryset = MA106_Date.objects.all()
-    
-    serializer_class = MA106_DateSerializer
 
 '''
 def index(request):

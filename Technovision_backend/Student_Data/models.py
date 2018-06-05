@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-import datetime
+
 from django.db import models
 from django_mysql.models import ListCharField
 
@@ -20,18 +20,13 @@ class Student(models.Model):
     Password = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.Student_Name + ' - ' +self.Roll_No
+        return self.Roll_No + " - " + self.Student_Name
 
-class MA106_Date(models.Model):
-    Date = models.DateField(primary_key=True, default="2018-06-07")
-    Status = models.CharField(max_length=2, default="NA")
-
-    def __str__(self):
-        return self.Date
 
 class MA106(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     Dates=ListCharField(base_field=models.CharField(max_length=10), size=16, max_length=(16*11), default=[])
     Attendance=ListCharField(base_field=models.CharField(max_length=2), size=16, max_length=(16*3), default=[])
+
     def __str__(self):
-        return self.student.Student_Name
+        return self.student.Roll_No
