@@ -29,4 +29,29 @@ class MA106(models.Model):
     Attendance=ListCharField(base_field=models.CharField(max_length=2), size=16, max_length=(16*3), default=[])
 
     def __str__(self):
-        return self.student.Roll_No
+        return self.student.Roll_No + ' - ' + self.student.Student_Name
+
+
+class CS101(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    Dates = ListCharField(base_field=models.CharField(max_length=10), size=24, max_length=(24*11), default=[])
+    Attendance = ListCharField(base_field=models.CharField(max_length=2), size=24, max_length=(24*3), default=[])
+
+    def __str__(self):
+        return self.student.Roll_No + ' - ' + self.student.Student_Name
+
+class PH108(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    Dates = ListCharField(base_field=models.CharField(max_length=10), size=24, max_length=(24*11), default=[])
+    Attendance = ListCharField(base_field=models.CharField(max_length=2), size=24, max_length=(24*3), default=[])
+
+    def __str__(self):
+        return self.student.Roll_No + ' - ' + self.student.Student_Name
+
+class MA105(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    Dates = ListCharField(base_field=models.CharField(max_length=10), size=24, max_length=(24*11), default=[])
+    Attendance = ListCharField(base_field=models.CharField(max_length=2), size=24, max_length=(24*3), default=[])
+
+    def __str__(self):
+        return self.student.Roll_No + ' - ' + self.student.Student_Name
