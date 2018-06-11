@@ -18,6 +18,7 @@ class Student(models.Model):
     Branch = models.CharField(max_length=50)
     Reg_Course = models.ManyToManyField(Course)
     Password = models.CharField(max_length=10)
+    Image = models.ImageField(upload_to='Student_Image', blank=True)
 
     def __str__(self):
         return self.Roll_No + " - " + self.Student_Name
