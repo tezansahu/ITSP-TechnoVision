@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void clicklogin(View view) {
         if (logincheck()){
+            EditText login_username = (EditText) findViewById(R.id.login_username);
             Intent intent = new Intent(this,Course_Activity.class);
+            intent.putExtra("username",login_username.getText().toString());
             startActivity(intent);
             }
         }
