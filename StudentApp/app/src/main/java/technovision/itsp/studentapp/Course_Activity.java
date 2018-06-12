@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ public class Course_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_course_);
         if (getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE)
         setContentView(R.layout.activty_course_);
+        Intent intent = getIntent();
+        TextView usr_rollno = (TextView) findViewById(R.id.txtrollno);
+        usr_rollno.setText(intent.getStringExtra("username"));
+
 
 
         final String[] courses = {"ma105","ma106","ma108","ma106","ma108","ma106","ma108","ma106","ma108","ma106","ma108","ma106","ma108","ma106","ma108"};

@@ -10,6 +10,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class AttendanceActivity extends AppCompatActivity {
 
     @Override
@@ -23,10 +25,23 @@ public class AttendanceActivity extends AppCompatActivity {
 
         final String[] attend = {"A","N"};
         //will load "courses" later from server
+        attendancefordate date = new attendancefordate("03-10-1999","P");
+        attendancefordate date1 = new attendancefordate("06-10-1999","P");
+        attendancefordate date2 = new attendancefordate("09-10-1999","A");
+        ArrayList<attendancefordate> datelist = new ArrayList<>();
+        datelist.add(date);
+        datelist.add(date1);
+        datelist.add(date2);
+        datelistadapter adapter = new datelistadapter(this,R.layout.adapter_view_attendance,datelist);
 
 
-        ListView attendanceview= (ListView) findViewById(R.id.attendance_list);
-        ListAdapter attendanceviewadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, attend);
+
+
+
+
+       ListView attendanceview= (ListView) findViewById(R.id.attendance_list);
+       attendanceview.setAdapter(adapter);
+       /* ListAdapter attendanceviewadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, attend);
         attendanceview.setAdapter(attendanceviewadapter);
 
        /* attendanceview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -39,6 +54,6 @@ public class AttendanceActivity extends AppCompatActivity {
             }
         });
 
-*/
+       */
     }
 }
