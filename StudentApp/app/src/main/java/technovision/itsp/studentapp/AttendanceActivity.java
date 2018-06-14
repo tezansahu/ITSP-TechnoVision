@@ -33,14 +33,8 @@ public class AttendanceActivity extends AppCompatActivity {
         datelist.add(date1);
         datelist.add(date2);
         datelistadapter adapter = new datelistadapter(this,R.layout.adapter_view_attendance,datelist);
-
-
-
-
-
-
-       ListView attendanceview= (ListView) findViewById(R.id.attendance_list);
-       attendanceview.setAdapter(adapter);
+        ListView attendanceview= (ListView) findViewById(R.id.attendance_list);
+        attendanceview.setAdapter(adapter);
        /* ListAdapter attendanceviewadapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, attend);
         attendanceview.setAdapter(attendanceviewadapter);
 
