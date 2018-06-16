@@ -89,4 +89,18 @@ public class Course_Activity extends AppCompatActivity {
 
 
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        }
+
+    public void clicklogout(View view) {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
 }
