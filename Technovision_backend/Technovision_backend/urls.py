@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^Student_Data/', include('Student_Data.urls')),
     url(r'^Prof_Data/', include('Prof_Data.urls')),
+    url(r'api-auth/', include('rest_framework.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

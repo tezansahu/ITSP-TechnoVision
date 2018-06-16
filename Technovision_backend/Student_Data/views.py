@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #from django.http import HttpResponse
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from .models import Student, Course, MA106, CS101, PH108, MA105
 from .serializers import StudentSerializer, CourseSerializer, MA106Serializer, CS101Serializer, PH108Serializer, MA105Serializer
 
