@@ -9,20 +9,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        >
 
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="50">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtusername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:padding="3dp"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -30,6 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:padding="3dp"
                 android:textColor="@android:color/black"/>
 
             <TextView
@@ -37,23 +39,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
+                android:padding="3dp"
                 android:textColor="@android:color/black"/>
-        </LinearLayout>
 
-        <LinearLayout
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/editText5"
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-
-                android:text="Click on the course to see your attendance" />
+                android:onClick="clicklogout"
+                android:layout_marginVertical="80dp"
+                android:text="LOGOUT" />
 
         </LinearLayout>
 
@@ -61,7 +56,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="100"
             android:orientation="vertical">
 
             <TextView
@@ -70,9 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="COURSES"
-                android:textSize="17dp"
-                tools:layout_editor_absoluteX="84dp"
-                tools:layout_editor_absoluteY="65dp" />
+                android:textSize="20dp"
+                android:textColor="@android:color/black"/>
 
 
             <ListView
@@ -81,6 +75,7 @@
                 android:layout_height="wrap_content"
                 ></ListView>
         </LinearLayout>
+
 
 
     </LinearLayout>

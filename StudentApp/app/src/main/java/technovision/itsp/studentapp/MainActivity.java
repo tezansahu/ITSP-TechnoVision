@@ -67,29 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("jsonstring", jsonstring);
                 Log.d("JSONobject","activity going to start");
                 startActivity(intent);
-                Log.d("JSONobject","activity started");
-            }
-            else {
-                Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
-
-            }
-        }
-
-    }
-
-   /* private void login(String password) {
-        if (!password.equals("-1")) {
-            Log.d("JSONobject","inside login");
-            EditText passwordview = (EditText) findViewById(R.id.login_password);
-            String enteredpassword = passwordview.getText().toString();
-            if (enteredpassword.equals(password)) {
-                Log.d("JSONobject","password matched");
-
-                EditText login_username = (EditText) findViewById(R.id.login_username);
-                Intent intent = new Intent(this, Course_Activity.class);
-                intent.putExtra("username", login_username.getText().toString());
-                Log.d("JSONobject","activity going to start");
-                startActivity(intent);
+                finish();
                 Log.d("JSONobject","activity started");
             }
             else {
@@ -101,18 +79,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    {
-        "Roll_No": "170100035",
-        "Student_Name": "Tezan Sahu",
-        "Branch": "Mechanical",
-        "Password": "tezan",
-        "Image": "http://technovision.pythonanywhere.com/media/Student_Image/Tezan.jpg",
-        "Reg_Course": [
-            "CS101",
-            "MA106"
-        ]
-    }
-     */
 
 
     private void processdata(String data) {
