@@ -30,21 +30,10 @@
 
             <ImageView
                 android:layout_width="0dp"
+                android:id="@+id/imageup"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingLeft="20dp"
-                android:paddingTop="20dp"
                 android:src="@drawable/up_clicked" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingRight="20dp"
-                android:paddingTop="20dp"
-                android:src="@drawable/up_clicked" />
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -55,21 +44,37 @@
 
             <ImageView
                 android:layout_width="0dp"
+                android:id="@+id/imageleft"
+
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingBottom="20dp"
-                android:paddingLeft="20dp"
-                android:src="@drawable/down" />
+
+                android:src="@drawable/left_clicked" />
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:paddingBottom="20dp"
-                android:paddingRight="20dp"
-                android:src="@drawable/down" />
+                android:id="@+id/imageright"
+
+                android:src="@drawable/right_clicked" />
 
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/imagedown"
+
+
+                android:src="@drawable/down_clicked" />
         </LinearLayout>
 
     </LinearLayout>
@@ -96,6 +101,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/servoleft"
                 android:layout_weight="1"
                 android:paddingBottom="15dp"
                 android:paddingLeft="25dp"
@@ -105,6 +111,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:id="@+id/servoright"
                 android:layout_weight="1"
                 android:paddingBottom="15dp"
                 android:paddingRight="25dp"
@@ -117,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2.5"
-            android:onClick="A2_fun_signout"
+            android:onClick="A2_signout"
             android:text="Sign Out" />
     </LinearLayout>
 

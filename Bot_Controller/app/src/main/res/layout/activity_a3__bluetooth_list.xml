@@ -29,9 +29,5 @@
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="A3_fun_connect"
-        android:text="Connect" />
+
 </LinearLayout>

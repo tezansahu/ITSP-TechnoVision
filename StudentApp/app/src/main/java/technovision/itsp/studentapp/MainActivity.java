@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted(Exception e, String result) {
                         Log.d("ion debug", "connection successful");
-                        processdata(result);
+                        if (result.isEmpty()) {Toast.makeText(MainActivity.this,"Unable to connect, please try later",Toast.LENGTH_LONG).show();}
+                        else processdata(result);
                     }
                 });
     }
