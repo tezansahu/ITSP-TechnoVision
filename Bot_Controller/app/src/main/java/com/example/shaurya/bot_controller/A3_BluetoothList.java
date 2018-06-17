@@ -24,8 +24,8 @@ public class A3_BluetoothList extends AppCompatActivity {
 
 
         ListView bluetoothlistview = (ListView) findViewById(R.id.A3_lst_bluetooth);
-       bluetoothlistview.setAdapter(arrayAdapter);
-       bluetoothlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        bluetoothlistview.setAdapter(arrayAdapter);
+        bluetoothlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                Toast.makeText(A3_BluetoothList.this,"Connecting to "+bluetoothlist.get(i)+"..",Toast.LENGTH_SHORT).show();
@@ -33,8 +33,8 @@ public class A3_BluetoothList extends AppCompatActivity {
                Intent intent = new Intent(A3_BluetoothList.this,A2_Remote.class);
                startActivity(intent);
 
-           }
-       });
+            }
+        });
 
     }
 

@@ -24,37 +24,37 @@ public class A2_Remote extends AppCompatActivity {
         up_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked up", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked up", Toast.LENGTH_SHORT).show();
             }
         });
         left_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked left", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked left", Toast.LENGTH_SHORT).show();
             }
         });
         right_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked right", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked right", Toast.LENGTH_SHORT).show();
             }
         });
         down_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked down", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked down", Toast.LENGTH_SHORT).show();
             }
         });
         servoleft_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked servoleft", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked servo left", Toast.LENGTH_SHORT).show();
             }
         });
         servoright_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(A2_Remote.this, "YOu clicked servoright", Toast.LENGTH_SHORT).show();
+                Toast.makeText(A2_Remote.this, "You clicked servo right", Toast.LENGTH_SHORT).show();
             }
         });
 

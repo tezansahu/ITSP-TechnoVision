@@ -58,7 +58,7 @@ public class A1_Login extends AppCompatActivity {
 
             for (int i = 0; i < jsonarray.length(); ++i) {
                 J = jsonarray.getJSONObject(i);
-                if (username.equals(J.getString("Prof_Name"))) {
+                if (username.equals(J.getString("Prof_Id"))) {
                     Log.d("JSONobject","username matched");
                     login(J);
                     c=1;
@@ -71,7 +71,7 @@ public class A1_Login extends AppCompatActivity {
 
 
         } catch (JSONException e) {
-            Toast.makeText(this,"Server is down, please try after sometime",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Server seems to be down, please try after sometime",Toast.LENGTH_LONG).show();
             e.printStackTrace();
 
         }
@@ -97,7 +97,7 @@ public class A1_Login extends AppCompatActivity {
                 Log.d("JSONobject","activity started");
             }
             else {
-                Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
 
             }
         }
