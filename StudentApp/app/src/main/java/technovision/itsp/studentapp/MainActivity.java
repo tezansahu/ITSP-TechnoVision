@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public String url = "https://technovision.pythonanywhere.com/";
+    public String url = "https://technovision.pythonanywhere.com/Student_Data/";
     public String urlextension = "?format=json";
 
 
@@ -109,13 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         } catch (JSONException e) {
+            Toast.makeText(this,"Server is down, please try after sometime",Toast.LENGTH_LONG).show();
             e.printStackTrace();
 
         }
     }
 
 
-    public JSONArray Stringtojsonarray(String string) {
+   /* public JSONArray Stringtojsonarray(String string) {
         if (string.equals(null)) {
             Log.d("stringtojsonarray", "string parameter is empty");
             return null;
@@ -152,4 +153,6 @@ public class MainActivity extends AppCompatActivity {
             return jsonArray;
         }
     }
+
+*/
 }

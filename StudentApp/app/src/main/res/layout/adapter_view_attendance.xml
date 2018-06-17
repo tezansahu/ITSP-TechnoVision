@@ -19,6 +19,7 @@
             android:id="@+id/attendance_course_date"
             android:text="03-10-1999"
             android:paddingHorizontal="10dp"
+            android:gravity="center"
 
        />
 
@@ -29,6 +30,7 @@
             android:textAlignment="center"
             android:id="@+id/attendance_"
             android:paddingHorizontal="10dp"
+            android:gravity="center"
           />
 
     </LinearLayout>
