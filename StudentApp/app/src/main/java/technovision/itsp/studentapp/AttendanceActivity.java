@@ -32,7 +32,7 @@ public class AttendanceActivity extends AppCompatActivity {
         TextView coursenameview= (TextView) findViewById(R.id.coursename);
         coursenameview.setText(course);
 
-        String url = "https://technovision.pythonanywhere.com/";
+        String url = "https://technovision.pythonanywhere.com/Student_Data/";
         String urlextension = "/?format=json";
 
         Ion.with(this)
