@@ -1,6 +1,9 @@
 package technovision.itsp.studentapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,21 +39,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void clicklogin(View view) {
         Log.d("clicklogin_method", "clicklogincalled");
+        if (isNetworkAvailable()) {
 
 
-        Ion.with(this)
-                .load((url + "Student/" + urlextension).toString())
-                .asString()
-                .setCallback(new FutureCallback<String>() {
-                    @Override
-                    public void onCompleted(Exception e, String result) {
-                        Log.d("ion debug", "connection successful");
-                        if (result.isEmpty()) {Toast.makeText(MainActivity.this,"Unable to connect, please try later",Toast.LENGTH_LONG).show();}
-                        else processdata(result);
-                    }
-                });
+            Ion.with(this)
+                    .load((url + "Student/" + urlextension).toString())
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            Log.d("ion debug", "connection successful");
+                            if (result.isEmpty()) {
+                                Toast.makeText(MainActivity.this, "Unable to connect, please try later", Toast.LENGTH_LONG).show();
+                            } else processdata(result);
+                        }
+                    });
+        } else {
+            Toast.makeText(this,"No internet connection", Toast.LENGTH_LONG).show();
+        }
     }
-
 
     private void login(JSONObject jsonObject) throws JSONException {
 
@@ -116,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();}
 
    /* public JSONArray Stringtojsonarray(String string) {
         if (string.equals(null)) {
