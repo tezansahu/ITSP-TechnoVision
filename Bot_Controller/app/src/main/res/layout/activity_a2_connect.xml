@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.shaurya.bot_controller.A3_BluetoothList">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="CONNECT TO BOT"
+        android:textAlignment="center"
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/status"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="STATUS:"
+        android:layout_marginLeft="10dp" />
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+       android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paired devices"
+            android:textSize="12dp"/>
+
+        <ListView
+            android:id="@+id/paired_devices_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ListView>
+        <TextView
+            android:id="@+id/new_devices"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other available devices"
+            android:textSize="12dp"
+            android:visibility="gone"/>
+        <ListView
+            android:id="@+id/new_devices_listview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </ListView>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="REFRESH"
+                android:layout_gravity="start"
+                android:id="@+id/scanbutton"
+                android:layout_marginLeft="5dp"
+                android:onClick="refreshbutton"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LOGOUT"
+            android:id="@+id/LOGOUTbutton"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="end"
+            android:onClick="logoutbutton"/>
+    </LinearLayout>
+
+
+</LinearLayout>

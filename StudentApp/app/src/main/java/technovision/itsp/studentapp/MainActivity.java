@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -21,24 +23,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+
 public class MainActivity extends AppCompatActivity {
+    Button loginbutton;
+    ProgressBar progressBar;
+    public String url = "https://technovision.pythonanywhere.com/Student_Data/";
+    public String urlextension = "?format=json";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loginbutton = (Button) findViewById(R.id.button);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
+
+        }
 
 
 
-    }
 
-
-    public String url = "https://technovision.pythonanywhere.com/Student_Data/";
-    public String urlextension = "?format=json";
 
 
     public void clicklogin(View view) {
         Log.d("clicklogin_method", "clicklogincalled");
+        loginbutton.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
         if (isNetworkAvailable()) {
 
 
@@ -79,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("JSONobject","activity started");
             }
             else {
+                loginbutton.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Wrong password", Toast.LENGTH_SHORT).show();
 
             }
@@ -113,10 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
             if (c==0)
-            { Toast.makeText(this, "username not found", Toast.LENGTH_SHORT).show(); }
+            {  loginbutton.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(this, "username not found", Toast.LENGTH_SHORT).show(); }
 
 
         } catch (JSONException e) {
+            loginbutton.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(this,"Server is down, please try after sometime",Toast.LENGTH_LONG).show();
             e.printStackTrace();
 

@@ -121,11 +121,12 @@
         </LinearLayout>
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_height="0dp"
             android:layout_weight="2.5"
             android:onClick="A2_signout"
-            android:text="Sign Out" />
+            android:text="LOGOUT" />
     </LinearLayout>
 
 </LinearLayout>

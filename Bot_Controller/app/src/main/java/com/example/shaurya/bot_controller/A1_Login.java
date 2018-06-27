@@ -89,7 +89,7 @@ public class A1_Login extends AppCompatActivity {
 
                 EditText login_username = (EditText) findViewById(R.id.A1_txt_LoginID);
                 String jsonstring = jsonObject.toString();
-                Intent intent = new Intent(this, A3_BluetoothList.class);
+                Intent intent = new Intent(this, A2_connect.class);
                 intent.putExtra("jsonstring", jsonstring);
                 Log.d("JSONobject","activity going to start");
                 startActivity(intent);
