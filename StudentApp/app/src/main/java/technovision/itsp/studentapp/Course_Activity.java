@@ -67,7 +67,9 @@ public class Course_Activity extends AppCompatActivity {
 
 
         ListView courselistview = (ListView) findViewById(R.id.course_list);
-        ListAdapter courselistadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, courses);
+
+        ListAdapter courselistadapter = new ArrayAdapter<String>(this,R.layout.mylistview,courses);
+
         courselistview.setAdapter(courselistadapter);
 
         courselistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
