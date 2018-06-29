@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,21 +19,49 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.Time;
 import java.util.Set;
 
 public class A2_connect extends Activity {
 
 
-    private static final String TAG = "DeviceListActivity";
-    public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    private static final String TAG = "BOT_CONTROLLER_A2_conne";
+    public static String EXTRA_BLUETOOTHCHATSERVICE = "bluetoothchatservice";
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+    public static BluetoothChatService mChatService;
+    public static myBluetoothChatService myChatService;
+    private String mConnectedDeviceName = null;
+
+    public final Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    mConnectedDeviceName = msg.getData().getString(Constants.DEVICE_NAME);
+                    Toast.makeText(A2_connect.this, "Connected to " + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    break;
+                case Constants.MESSAGE_TOAST:
+                    Toast.makeText(A2_connect.this, msg.getData().getString(Constants.TOAST),
+                            Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"oncreatecalled");
+        myChatService = new myBluetoothChatService();
+        mChatService = new BluetoothChatService(A2_connect.this,mHandler);
+        myChatService.setMchatservice(mChatService);
+
 
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
@@ -45,6 +75,7 @@ public class A2_connect extends Activity {
         Button scanButton = (Button) findViewById(R.id.scanbutton);
         scanButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Log.d(TAG,"onclickcalled");
                 doDiscovery();
                 }
         });
@@ -95,6 +126,7 @@ public class A2_connect extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG,"ondestroycalled");
 
         // Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
@@ -109,7 +141,7 @@ public class A2_connect extends Activity {
      * Start device discover with the BluetoothAdapter
      */
     private void doDiscovery() {
-        Log.d(TAG, "doDiscovery()");
+        Log.d(TAG, "doDiscoverycalled");
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
@@ -130,6 +162,7 @@ public class A2_connect extends Activity {
     }
 
     private void setStatus(String string) {
+        Log.d(TAG, "setstatuscalled");
         TextView status = (TextView) findViewById(R.id.status);
         status.setText("STATUS: "+ string);
     }
@@ -141,6 +174,7 @@ public class A2_connect extends Activity {
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
+            setStatus("Connecting...");
             mBtAdapter.cancelDiscovery();
 
             // Get the device MAC address, which is the last 17 chars in the View
@@ -149,19 +183,30 @@ public class A2_connect extends Activity {
 
             // Create the result Intent and include the MAC address
             Log.d("DeviceListActivity", "Device address: "+address);
-            connect();
-
             Intent intent = new Intent(A2_connect.this,A2_Remote.class);
-            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-            startActivity(intent);
+            connect(address);
+
+
+
+            Log.d(TAG,"mchatservice_state: "+mChatService.getState());
+            if (mChatService.getState()==BluetoothChatService.STATE_CONNECTING){startActivity(intent); }
+            else
+            { onRestart(); }
+
 
         }
     };
 
-    private void connect() {
+    private void connect(String address) {
+        Log.d(TAG,"connect called: address is " + address);
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        Log.d(TAG,"bluetoothdevice initialised: "+ device.getName());
 
-
-
+        mChatService.connect(device,true);
+        Log.d(TAG,"connect service called");
+        myChatService.setMchatservice(mChatService);
+        Log.d(TAG,"mychatservice set method called");
     }
 
 
@@ -173,6 +218,7 @@ public class A2_connect extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.d(TAG, "onReceivecalled");
 
             // When discovery finds a device
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -199,11 +245,7 @@ public class A2_connect extends Activity {
     boolean isHC05(String name, String address){
         Log.d("isHC05", name+", "+address);
         return true;
-
-
-
-
-       // return (name != null && (name.equalsIgnoreCase("tushar macbook air") || name.equalsIgnoreCase("HC-06"))) ||
+        // return (name != null && (name.equalsIgnoreCase("tushar macbook air") || name.equalsIgnoreCase("HC-06"))) ||
          //       address.startsWith("98") || address.startsWith("00");
     }
 

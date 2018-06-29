@@ -16,11 +16,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class A1_Login extends AppCompatActivity {
+    public String TAG = "BOT_CONTROLLER";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a1__login);
+        Log.d(TAG,"oncreate login called");
     }
 
     public String url = "https://technovision.pythonanywhere.com/Prof_Data/";
