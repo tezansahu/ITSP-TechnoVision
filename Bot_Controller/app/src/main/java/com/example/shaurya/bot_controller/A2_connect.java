@@ -29,10 +29,10 @@ public class A2_connect extends Activity {
 
     private static final String TAG = "BOT_CONTROLLER_A2_conne";
     public static String EXTRA_BLUETOOTHCHATSERVICE = "bluetoothchatservice";
+    private static final int REQUEST_ENABLE_BT = 3;
     private BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     public static BluetoothChatService mChatService;
-    public static myBluetoothChatService myChatService;
     private String mConnectedDeviceName = null;
 
     public final Handler mHandler = new Handler() {
@@ -58,13 +58,11 @@ public class A2_connect extends Activity {
 
         super.onCreate(savedInstanceState);
         Log.d(TAG,"oncreatecalled");
-        myChatService = new myBluetoothChatService();
         mChatService = new BluetoothChatService(A2_connect.this,mHandler);
-        myChatService.setMchatservice(mChatService);
+
 
 
         // Setup the window
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_a2_connect);
         setStatus("Not connected");
 
@@ -120,6 +118,29 @@ public class A2_connect extends Activity {
         } else {
             String noDevices = getResources().getText(R.string.none_paired).toString();
             pairedDevicesArrayAdapter.add(noDevices);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!mBtAdapter.isEnabled())
+        {Log.d(TAG,"ONSTART bluetooth not on_");
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);}
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_ENABLE_BT)
+        { if (resultCode!=RESULT_OK)
+        {Toast.makeText(A2_connect.this,"App cannot work without bluetooth",Toast.LENGTH_LONG).show();
+        finish();}
+        else {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent); }
         }
     }
 
@@ -205,8 +226,7 @@ public class A2_connect extends Activity {
 
         mChatService.connect(device,true);
         Log.d(TAG,"connect service called");
-        myChatService.setMchatservice(mChatService);
-        Log.d(TAG,"mychatservice set method called");
+
     }
 
 

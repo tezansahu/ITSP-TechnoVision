@@ -149,6 +149,7 @@ public class A2_Remote extends AppCompatActivity {
     }
 
     public void A2_signout(View view) {
+        mChatService.stop();
         Intent intent = new Intent(this,A1_Login.class);
         startActivity(intent);
 

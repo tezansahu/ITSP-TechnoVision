@@ -1,11 +1,16 @@
 package com.example.shaurya.bot_controller;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.koushikdutta.async.future.FutureCallback;
@@ -17,12 +22,18 @@ import org.json.JSONObject;
 
 public class A1_Login extends AppCompatActivity {
     public String TAG = "BOT_CONTROLLER";
+    public  String IP_ADDRESS;
+    Button loginbutton;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_a1__login);
         Log.d(TAG,"oncreate login called");
+        loginbutton = (Button) findViewById(R.id.button);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
     }
 
     public String url = "https://technovision.pythonanywhere.com/Prof_Data/";
@@ -30,8 +41,10 @@ public class A1_Login extends AppCompatActivity {
 
     public void clicklogin(View view) {
         Log.d("clicklogin_method", "clicklogincalled");
+        loginbutton.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
-
+        if (isNetworkAvailable()) {
         Ion.with(this)
                 .load((url +"Prof"+ urlextension))
                 .asString()
@@ -42,6 +55,20 @@ public class A1_Login extends AppCompatActivity {
                         processdata(result);
                     }
                 });
+        }
+        else{
+            Toast.makeText(this,"No internet connection", Toast.LENGTH_LONG).show();
+            loginbutton.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+
+        }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+            = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 
@@ -69,10 +96,14 @@ public class A1_Login extends AppCompatActivity {
 
             }
             if (c==0)
-            { Toast.makeText(this, "LoginID not found", Toast.LENGTH_SHORT).show(); }
+            {  loginbutton.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(this, "LoginID not found", Toast.LENGTH_SHORT).show(); }
 
 
         } catch (JSONException e) {
+            loginbutton.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
             Toast.makeText(this,"Server seems to be down, please try after sometime",Toast.LENGTH_LONG).show();
             e.printStackTrace();
 
@@ -88,22 +119,29 @@ public class A1_Login extends AppCompatActivity {
             String enteredpassword = passwordview.getText().toString();
             if (enteredpassword.equals(password)) {
                 Log.d("JSONobject","password matched");
-
-                EditText login_username = (EditText) findViewById(R.id.A1_txt_LoginID);
-                String jsonstring = jsonObject.toString();
+                EditText IP_address = (EditText) findViewById(R.id.A1_txt_IPadd);
+                IP_ADDRESS = IP_address.getText().toString();
+                if (IP_ADDRESScheck())
+                {
                 Intent intent = new Intent(this, A2_connect.class);
-                intent.putExtra("jsonstring", jsonstring);
-                Log.d("JSONobject","activity going to start");
                 startActivity(intent);
-                finish();
+                finish();}
+                else
+                {Toast.makeText(A1_Login.this,"Invalid IP Address, Enter again..",Toast.LENGTH_SHORT).show();}
                 Log.d("JSONobject","activity started");
             }
             else {
+                loginbutton.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
 
             }
         }
 
+    }
+
+    private boolean IP_ADDRESScheck() {
+        return  true;
     }
 
 
