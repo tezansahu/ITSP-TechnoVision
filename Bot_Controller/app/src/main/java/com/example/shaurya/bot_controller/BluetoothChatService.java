@@ -225,15 +225,18 @@ public class BluetoothChatService {
      * Write to the ConnectedThread in an unsynchronized manner
      *
      * @param out The bytes to write
-     * @see ConnectedThread#write(byte[])
+     * @see ConnectedThread#write(int)
      */
-    public void write(byte[] out) {
+    public void write(int out) {
         // Create temporary object
+        Log.d(TAG,"write called");
         ConnectedThread r;
         // Synchronize a copy of the ConnectedThread
+
         synchronized (this) {
             if (mState != STATE_CONNECTED) return;
             r = mConnectedThread;
+            Log.d(TAG,"connected thread initialised");
         }
         // Perform the write unsynchronized
         r.write(out);
@@ -483,7 +486,7 @@ public class BluetoothChatService {
          *
          * @param buffer The bytes to write
          */
-        public void write(byte[] buffer) {
+        public void write(int buffer) {
             try {
                 mmOutStream.write(buffer);
 

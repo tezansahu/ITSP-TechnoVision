@@ -1,6 +1,7 @@
 package com.example.shaurya.bot_controller;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * class BotController
@@ -23,53 +25,48 @@ import android.widget.TextView;
  */
 public class BotController implements View.OnTouchListener {
     BluetoothChatService mChatService;
-    MainActivity mContext;
-    public static final String TAG = " BotControl";
 
-    private byte mMotorState = 0b00000000; // Store the last bit sequence sent|to be sent
+    public static final String TAG = "BotControllerClass";
+
+    private int mMotorState = 7; // Store the last bit sequence sent|to be sent
 
     // PIN mappings of motor control bits to ATtiny PORTB pins
-    private static final byte LT_MOTOR_FWD=1;
-    private static final byte LT_MOTOR_BCK=3;
-    private static final byte RT_MOTOR_FWD=0;
-    private static final byte RT_MOTOR_BCK=2;
-    private static final byte SERVO_LEFT=5;
-    private static final byte SERVO_RIGHT=6;
+    private static final int MOTOR_FWD=1;
+    private static final int MOTOR_BCK=4;
+    private static final int MOTOR_LEFT=2;
+    private static final int MOTOR_RIGHT=3;
+    private static final int SERVO_LEFT=5;
+    private static final int SERVO_RIGHT=6;
 
 
-    public BotController(MainActivity context, BluetoothChatService chatService){
-        mContext=context;
+    public BotController(BluetoothChatService chatService){
         mChatService=chatService;
+        Log.d(TAG,"constructor called");
 
-
-    }
+        }
 
     // Set the bit specified by "which" using the PIN mappping to "bit"(0|1)
     // Only affects individual bits so two buttons pressed simultaneously will work
-    private void setBit(byte which, int bit){
-        if(bit==1){
-            mMotorState = (byte) (mMotorState | (1<<which));
-        } else {
-            mMotorState = (byte) (mMotorState & ~(1<<which));
-        }
-    }
+
 
     // reset bits to 0b0000000
     private void reset(){
-        mMotorState = 0x00;
+        Log.d(TAG,"reset called");mMotorState = 0;
     }
 
 
     // Initiate a send operation with the message as the bit sequence "b"
     public void sendMessage(int b) {
         // Check that we're actually connected before trying anything
+        Log.d(TAG,"sendmessage called");
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             Log.w("BluetoothWarn", "Not connected to any device, Please connect first!");
             return;
         }
 
-        byte msg[] = {(byte)b};
-        mChatService.write(msg);
+
+        mChatService.write(b);
+        Log.d(TAG,"mchatservice.write called");
     }
 
 
@@ -78,6 +75,7 @@ public class BotController implements View.OnTouchListener {
     // Handle touch events on every button
     @Override
     public boolean onTouch(View v, MotionEvent event){
+        Log.d(TAG,"onTouch called");
         boolean updated = true;
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -88,36 +86,22 @@ public class BotController implements View.OnTouchListener {
                 // bit sequence according to the button pressed
                 switch (v.getId()) {
                     case R.id.imageup:
-                        setBit(LT_MOTOR_FWD,1);
-                        setBit(LT_MOTOR_BCK,0);
-                        setBit(RT_MOTOR_FWD,1);
-                        setBit(RT_MOTOR_BCK,0);
-                        break;
+                        mMotorState=MOTOR_FWD;
+                        Log.d("BotControllerClass","up clicked");break;
                     case R.id.imagedown:
-                        setBit(LT_MOTOR_FWD,0);
-                        setBit(LT_MOTOR_BCK,1);
-                        setBit(RT_MOTOR_FWD,0);
-                        setBit(RT_MOTOR_BCK,1);
+                        mMotorState=MOTOR_BCK;
                         break;
                     case R.id.imageleft:
-                        setBit(LT_MOTOR_FWD,1);
-                        setBit(LT_MOTOR_BCK,0);
-                        setBit(RT_MOTOR_FWD,0);
-                        setBit(RT_MOTOR_BCK,1);
+                        mMotorState=MOTOR_LEFT;
                         break;
                     case R.id.imageright:
-                        setBit(LT_MOTOR_FWD,0);
-                        setBit(LT_MOTOR_BCK,1);
-                        setBit(RT_MOTOR_FWD,1);
-                        setBit(RT_MOTOR_BCK,0);
+                        mMotorState=MOTOR_RIGHT;
                         break;
                     case R.id.servoleft:
-                        setBit(SERVO_LEFT,1);
-                        setBit(SERVO_RIGHT,0);
+                        mMotorState=SERVO_LEFT;
                         break;
                     case R.id.servoright:
-                        setBit(SERVO_LEFT,0);
-                        setBit(SERVO_RIGHT,1);
+                        mMotorState=SERVO_RIGHT;
                         break;
 
                 }
@@ -127,6 +111,7 @@ public class BotController implements View.OnTouchListener {
             case MotionEvent.ACTION_OUTSIDE:
                 Log.d(TAG, "Action Up");
                 v.setPressed(false);
+                updated=true;
 
                 // Similar switch case to reset bits when button is left
                 // In effect the motion of bot will last till the button is pressed
@@ -135,6 +120,9 @@ public class BotController implements View.OnTouchListener {
                     case R.id.imagedown:
                     case R.id.imageleft:
                     case R.id.imageright:
+                        case R.id.servoleft:
+                    case R.id.servoright:
+
                         reset();
                         break;
                         }
