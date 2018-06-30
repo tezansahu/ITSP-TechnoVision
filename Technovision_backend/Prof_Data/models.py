@@ -11,4 +11,4 @@ class Prof(models.Model):
 
     def __str__(self):
         return self.Prof_Id + ' - ' + self.Prof_Name + ' - ' + self.Prof_Course.Course_Code
-    
+

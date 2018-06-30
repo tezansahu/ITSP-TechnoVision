@@ -2,12 +2,14 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django_mysql.models import ListCharField
+#from Prof_Data.models import Prof
 
 class Course(models.Model):
     Course_Name = models.CharField(max_length=200)
     Course_Code = models.CharField(max_length=6, primary_key=True)
     Credits = models.IntegerField()
     No_of_Lectures = models.IntegerField()
+    Course_Prof = models.CharField(max_length=50)
 
     def __str__(self):
         return self.Course_Code + ' - ' +self.Course_Name
