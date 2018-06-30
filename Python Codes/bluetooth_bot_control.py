@@ -9,7 +9,7 @@ GPIO.setmode(GPIO.BOARD)
 motor_left_1=7
 motor_left_2=11
 motor_right_1=13
-motor_right_2=
+motor_right_2=15
 
 servo_signal=12
 
