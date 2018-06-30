@@ -100,15 +100,19 @@ stop()
 while True:
 
     print("Waiting for connection on RFCOMM channel %d" % port)
-
+    # Open file to write IP Webcam server address for other script
+    fout=open("ip_address.txt","w")
     try:
         client_sock = None
 
         # This will block until we get a new connection
         client_sock, client_info = server_sock.accept()
         print("Accepted connection from ", client_info)
-	data = client_sock.recv(1024)
+        data = client_sock.recv(1024)
         print("Received ", data.decode("utf-8"))
+        # Write IP address received to file
+        fout.write(data.decode("utf-8"))
+        fout.close()
         while True:
         # Read the data sent by the client
             data = client_sock.recv(1024)
