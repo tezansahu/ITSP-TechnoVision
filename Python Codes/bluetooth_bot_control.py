@@ -6,10 +6,10 @@ import time
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 
-motor_left_1=7
-motor_left_2=11
-motor_right_1=13
-motor_right_2=15
+motor_left_1=13
+motor_left_2=15
+motor_right_1=7
+motor_right_2=11
 
 servo_signal=12
 
@@ -107,6 +107,8 @@ while True:
         # This will block until we get a new connection
         client_sock, client_info = server_sock.accept()
         print("Accepted connection from ", client_info)
+	data = client_sock.recv(1024)
+        print("Received ", data.decode("utf-8"))
         while True:
         # Read the data sent by the client
             data = client_sock.recv(1024)
