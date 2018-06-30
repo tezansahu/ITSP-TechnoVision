@@ -63,9 +63,8 @@ public class BotController implements View.OnTouchListener {
             Log.w("BluetoothWarn", "Not connected to any device, Please connect first!");
             return;
         }
-
-
-        mChatService.write(b);
+        byte msg[] = {(byte)b};
+        mChatService.write(msg);
         Log.d(TAG,"mchatservice.write called");
     }
 

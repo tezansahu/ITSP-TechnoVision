@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,11 +30,11 @@ public class A2_connect extends Activity {
 
 
     private static final String TAG = "BOT_CONTROLLER_A2_conne";
-    public static String EXTRA_BLUETOOTHCHATSERVICE = "bluetoothchatservice";
-    private BluetoothAdapter mBtAdapter;
+
+    private static final int REQUEST_ENABLE_BT = 3;
+    public static BluetoothAdapter mBtAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
     public static BluetoothChatService mChatService;
-    public static myBluetoothChatService myChatService;
     private String mConnectedDeviceName = null;
 
     public final Handler mHandler = new Handler() {
@@ -58,15 +60,11 @@ public class A2_connect extends Activity {
 
         super.onCreate(savedInstanceState);
         Log.d(TAG,"oncreatecalled");
-        myChatService = new myBluetoothChatService();
         mChatService = new BluetoothChatService(A2_connect.this,mHandler);
-        myChatService.setMchatservice(mChatService);
-
 
         // Setup the window
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_a2_connect);
-        setStatus("Not connected");
+
 
         // Set result CANCELED in case the user backs out
 
@@ -113,13 +111,38 @@ public class A2_connect extends Activity {
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                if(isHC05(device.getName(), device.getAddress())) {
-                    pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+                pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 }
-            }
         } else {
             String noDevices = getResources().getText(R.string.none_paired).toString();
             pairedDevicesArrayAdapter.add(noDevices);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setStatus("Select a device to connect");
+        if (!mBtAdapter.isEnabled())
+        {
+            Log.d(TAG,"ONSTART bluetooth not on_");
+            A1_Login.BT_ENABLED=true;
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);}
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==REQUEST_ENABLE_BT)
+        { if (resultCode!=RESULT_OK)
+        {Toast.makeText(A2_connect.this,"App cannot work without bluetooth",Toast.LENGTH_LONG).show();
+        finish();}
+        else {
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+        }
         }
     }
 
@@ -144,7 +167,7 @@ public class A2_connect extends Activity {
         Log.d(TAG, "doDiscoverycalled");
 
         // Indicate scanning in the title
-        setProgressBarIndeterminateVisibility(true);
+
         setStatus("Scanning for devices…");
 
 
@@ -183,18 +206,24 @@ public class A2_connect extends Activity {
 
             // Create the result Intent and include the MAC address
             Log.d("DeviceListActivity", "Device address: "+address);
-            Intent intent = new Intent(A2_connect.this,A2_Remote.class);
+            final Intent intent = new Intent(A2_connect.this,A2_Remote.class);
             connect(address);
+            new CountDownTimer(10000,1000){
+                public void onTick(long millisUntilFinished) {
+                    if (mChatService.getState()==BluetoothChatService.STATE_CONNECTED){
+                        startActivity(intent);this.cancel();
+                    }
+                    }
+                public void onFinish() {
+                    setStatus("Select a device to connect");
+                    }
+
+            }.start();
 
 
 
             Log.d(TAG,"mchatservice_state: "+mChatService.getState());
-            if (mChatService.getState()==BluetoothChatService.STATE_CONNECTING){startActivity(intent); }
-            else
-            { onRestart(); }
-
-
-        }
+            }
     };
 
     private void connect(String address) {
@@ -205,8 +234,7 @@ public class A2_connect extends Activity {
 
         mChatService.connect(device,true);
         Log.d(TAG,"connect service called");
-        myChatService.setMchatservice(mChatService);
-        Log.d(TAG,"mychatservice set method called");
+
     }
 
 
@@ -226,9 +254,7 @@ public class A2_connect extends Activity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    if(isHC05(device.getName(), device.getAddress())){
-                        mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
-                    }
+                    mNewDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
                 }
                 // When discovery is finished, change the Activity title
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
@@ -242,11 +268,15 @@ public class A2_connect extends Activity {
         }
     };
 
-    boolean isHC05(String name, String address){
-        Log.d("isHC05", name+", "+address);
-        return true;
-        // return (name != null && (name.equalsIgnoreCase("tushar macbook air") || name.equalsIgnoreCase("HC-06"))) ||
-         //       address.startsWith("98") || address.startsWith("00");
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
+    public void logoutbutton(View view) {
+        Intent intent = new Intent(A2_connect.this,A1_Login.class);
+        startActivity(intent);
+        finish();
+
+    }
 }

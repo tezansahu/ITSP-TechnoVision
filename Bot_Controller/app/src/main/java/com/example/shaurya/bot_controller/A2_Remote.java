@@ -53,10 +53,6 @@ public class A2_Remote extends AppCompatActivity {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mChatService =A2_connect.mChatService;
 
-       // mChatService  =((myBluetoothChatService) this.getApplication()).getMchatservice();
-
-
-
         // If the adapter is null, then Bluetooth is not supported
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
@@ -65,6 +61,9 @@ public class A2_Remote extends AppCompatActivity {
 
         mBotController = new BotController(mChatService);
         Log.d(TAG,"botcontroller initialised: "+mChatService.getState());
+        byte[] msg1 = A1_Login.IP_ADDRESS.getBytes();
+        mChatService.write(msg1);
+
 
         up_image.setOnTouchListener(mBotController);
         left_image.setOnTouchListener(mBotController);
@@ -98,8 +97,11 @@ public class A2_Remote extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
+        if (A1_Login.BT_ENABLED)
+        {
+        A2_connect.mBtAdapter.disable();}
         super.onDestroy();
-        Log.d(TAG,"onDEstroycalled");
+        Log.d(TAG,"onDestroycalled");
         if (mChatService != null) {
             mChatService.stop();
         }
@@ -148,9 +150,24 @@ public class A2_Remote extends AppCompatActivity {
         super.onBackPressed();
     }
 
+
+
+
     public void A2_signout(View view) {
+        mChatService.stop();
+        //A2_connect.mBtAdapter.disable();
         Intent intent = new Intent(this,A1_Login.class);
         startActivity(intent);
+
+    }
+
+    public void A2_disconnect(View view) {
+        mChatService.stop();
+
+        A2_connect.mBtAdapter.disable();
+        Intent intent = new Intent(this,A2_connect.class);
+        startActivity(intent);
+
 
     }
 }

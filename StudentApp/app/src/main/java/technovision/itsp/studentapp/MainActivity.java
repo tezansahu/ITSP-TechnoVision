@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                     });
         } else {
             Toast.makeText(this,"No internet connection", Toast.LENGTH_LONG).show();
+            loginbutton.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
