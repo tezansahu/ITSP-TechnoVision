@@ -27,7 +27,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".A2_Remote" android:screenOrientation="portrait"/>
-        <activity android:name=".A3_BluetoothList" />
         <activity android:name=".A2_connect"></activity>
     </application>
 

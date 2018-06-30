@@ -22,7 +22,11 @@ import org.json.JSONObject;
 
 public class A1_Login extends AppCompatActivity {
     public String TAG = "BOT_CONTROLLER";
-    public  String IP_ADDRESS;
+    public static String IP_ADDRESS;
+    public static String username;
+    public static String password;
+    public static boolean BT_ENABLED= false;
+
     Button loginbutton;
     ProgressBar progressBar;
 
@@ -75,7 +79,7 @@ public class A1_Login extends AppCompatActivity {
     private void processdata(String data) {
         try {
             EditText usernameview = (EditText) findViewById(R.id.A1_txt_LoginID);
-            String username = usernameview.getText().toString();
+            username = usernameview.getText().toString();
             Log.d("JSON", "processdata method called"+data);
 
             int c= 0;
@@ -113,7 +117,7 @@ public class A1_Login extends AppCompatActivity {
     private void login(JSONObject jsonObject) throws JSONException {
 
         if (!jsonObject.isNull("Password")) {
-            String password = jsonObject.getString("Password");
+            password = jsonObject.getString("Password");
             Log.d("JSONobject","inside login");
             EditText passwordview = (EditText) findViewById(R.id.A1_txt_Pass);
             String enteredpassword = passwordview.getText().toString();
@@ -125,9 +129,11 @@ public class A1_Login extends AppCompatActivity {
                 {
                 Intent intent = new Intent(this, A2_connect.class);
                 startActivity(intent);
-                finish();}
+                }
                 else
-                {Toast.makeText(A1_Login.this,"Invalid IP Address, Enter again..",Toast.LENGTH_SHORT).show();}
+                {loginbutton.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(A1_Login.this,"Invalid IP Address, Enter again..",Toast.LENGTH_SHORT).show();}
                 Log.d("JSONobject","activity started");
             }
             else {
@@ -141,8 +147,32 @@ public class A1_Login extends AppCompatActivity {
     }
 
     private boolean IP_ADDRESScheck() {
-        return  true;
+            try { String ip = IP_ADDRESS;
+                if ( ip == null || ip.isEmpty() ) {
+                    return false;
+                }
+
+                String[] parts = ip.split( "\\." );
+                if ( parts.length != 4 ) {
+                    return false;
+                }
+
+                for ( String s : parts ) {
+                    int i = Integer.parseInt( s );
+                    if ( (i < 0) || (i > 255) ) {
+                        return false;
+                    }
+                }
+                if ( ip.endsWith(".") ) {
+                    return false;
+                }
+
+                return true;
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+        }
     }
 
 
-}
+

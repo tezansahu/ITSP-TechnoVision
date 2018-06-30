@@ -5,21 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     tools:context="com.example.shaurya.bot_controller.A3_BluetoothList">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="CONNECT TO BOT"
-        android:textAlignment="center"
-        android:textSize="25dp" />
-    <TextView
-        android:layout_width="match_parent"
         android:id="@+id/status"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="STATUS:"
-        android:layout_marginLeft="10dp" />
+        android:textSize="20dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@android:color/black"/>
 
 
 
@@ -31,8 +28,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paired devices"
-            android:textSize="20dp"/>
+            android:padding="10dp"
+            android:text="PAIRED DEVICES"
+            android:textSize="17dp"/>
 
         <ListView
             android:id="@+id/paired_devices_listview"
@@ -44,8 +42,9 @@
             android:id="@+id/new_devices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Other available devices"
-            android:textSize="20dp"
+            android:text="OTHER AVAILABLE DEVICES"
+            android:padding="10dp"
+            android:textSize="17dp"
             android:visibility="gone"/>
         <ListView
             android:id="@+id/new_devices_listview"
@@ -71,7 +70,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SEARCH"
+                android:text="SEARCH OTHER DEVICES"
                 android:layout_gravity="start"
                 android:id="@+id/scanbutton"
                 android:layout_marginLeft="5dp"
