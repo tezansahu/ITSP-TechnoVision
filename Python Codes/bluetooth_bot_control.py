@@ -21,8 +21,11 @@ GPIO.setup(servo_signal, GPIO.OUT)
 
 #servo Initial Setup for PWM
 p=GPIO.PWM(servo_signal, 50)
-servo_posn=7.5
-p.start(servo_posn)
+servo_loc=0
+def set_servo(servo_loc):
+	servo_loc=7.5
+	p.start(servo_loc)
+	return servo_loc
 
 ####Set value of pins as per direction of movement###### 
 def forward():
@@ -57,24 +60,25 @@ def stop():
 
 #######################################################
 
-
-
 ####Set Servo Position as per bluetooth signals########
-def servo_left():
-    if servo_posn==12.5:
-        return
+def servo_left(servo_loc):
+    print(servo_loc)
+    if servo_loc==12.5:
+        return servo_loc
     else:
-        servo_posn+=0.5
-        p.ChangeDutyCycle(servo_posn)
+        servo_loc=servo_loc+1
+        p.ChangeDutyCycle(servo_loc)
+        return servo_loc
 
-def servo_right():
-    if servo_posn==2.5:
-        return
+def servo_right(servo_loc):
+    print(servo_loc)
+    if servo_loc==2.5:
+        return servo_loc
     else:
-        servo_posn-=0.5
-        p.ChangeDutyCycle(servo_posn)
+        servo_loc=servo_loc-1
+        p.ChangeDutyCycle(servo_loc)
+        return servo_loc
 #######################################################
-
 
 # Create a new server socket using RFCOMM protocol
 server_sock = BluetoothSocket(RFCOMM)
@@ -92,15 +96,19 @@ uuid = "00001101-0000-1000-8000-00805f9b34fb"
 advertise_service(server_sock, "RaspiBtSrv",
                    service_id=uuid,
                    service_classes=[uuid, SERIAL_PORT_CLASS],
-                   profiles=[SERIAL_PORT_PROFILE])
+                   profiles=[SERIAL_PORT_PROFILE]
+                   )
 
 
 stop()
+
+
 # Main Bluetooth server loop
 while True:
 
     print("Waiting for connection on RFCOMM channel %d" % port)
-    # Open file to write IP Webcam server address for other script
+    
+	# Open file to write IP Webcam server address for other script
     fout=open("ip_address.txt","w")
     try:
         client_sock = None
@@ -112,7 +120,9 @@ while True:
         print("Received ", data.decode("utf-8"))
         # Write IP address received to file
         fout.write(data.decode("utf-8"))
+        
         fout.close()
+        servo_loc=set_servo(servo_loc)
         while True:
         # Read the data sent by the client
             data = client_sock.recv(1024)
@@ -130,9 +140,11 @@ while True:
             elif data[0]==4:
                 backward()
             elif data[0]==5:
-                servo_left()
+
+                servo_loc=servo_left(servo_loc)
             elif data[0]==6:
-                servo_right()
+
+                servo_loc=servo_right(servo_loc)
             else:
                 stop()
                 time.sleep(1)    
@@ -150,3 +162,4 @@ while True:
         p.stop()
         GPIO.cleanup()
         break
+
