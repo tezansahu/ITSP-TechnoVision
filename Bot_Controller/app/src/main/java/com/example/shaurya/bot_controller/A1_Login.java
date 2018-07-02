@@ -175,7 +175,7 @@ public class A1_Login extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+      this.finishAffinity();
     }
 }
 
