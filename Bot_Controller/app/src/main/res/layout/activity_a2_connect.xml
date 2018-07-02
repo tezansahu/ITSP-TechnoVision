@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="STATUS:"
-        android:textSize="20dp"
+        android:textSize="17dp"
         android:layout_marginLeft="10dp"
         android:textColor="@android:color/black"/>
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="PAIRED DEVICES"
-            android:textSize="17dp"/>
+            android:textSize="20dp"/>
 
         <ListView
             android:id="@+id/paired_devices_listview"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="OTHER AVAILABLE DEVICES"
             android:padding="10dp"
-            android:textSize="17dp"
+            android:textSize="20dp"
             android:visibility="gone"/>
         <ListView
             android:id="@+id/new_devices_listview"
