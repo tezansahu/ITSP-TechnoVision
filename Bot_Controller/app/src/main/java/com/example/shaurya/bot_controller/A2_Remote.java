@@ -64,6 +64,8 @@ public class A2_Remote extends AppCompatActivity {
         Log.d(TAG,"botcontroller initialised: "+mChatService.getState());
         byte[] msg1 = A1_Login.IP_ADDRESS.getBytes();
         mChatService.write(msg1);
+        byte[] msg2 = A1_Login.course.getBytes();
+        mChatService.write(msg1);
 
 
         up_image.setOnTouchListener(mBotController);
