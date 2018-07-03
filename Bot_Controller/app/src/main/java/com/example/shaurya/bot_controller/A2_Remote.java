@@ -30,6 +30,7 @@ public class A2_Remote extends AppCompatActivity {
     private String mConnectedDeviceName = null;
     private BluetoothAdapter mBluetoothAdapter = null;
     public BluetoothChatService mChatService;
+    public int EXIT = 8;
 
 
     private BotController mBotController;
@@ -97,9 +98,6 @@ public class A2_Remote extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        if (A1_Login.BT_ENABLED)
-        {
-        A2_connect.mBtAdapter.disable();}
         super.onDestroy();
         Log.d(TAG,"onDestroycalled");
         if (mChatService != null) {
@@ -147,6 +145,9 @@ public class A2_Remote extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+      //  byte msg[] = {(byte)EXIT};
+      //  mChatService.write(msg);
+        mChatService.stop();
         super.onBackPressed();
     }
 
@@ -154,20 +155,21 @@ public class A2_Remote extends AppCompatActivity {
 
 
     public void A2_signout(View view) {
+        //byte msg[] = {(byte)EXIT};
+        //mChatService.write(msg);
         mChatService.stop();
         //A2_connect.mBtAdapter.disable();
         Intent intent = new Intent(this,A1_Login.class);
         startActivity(intent);
+        finish();
 
     }
 
     public void A2_disconnect(View view) {
+       // byte msg[] = {(byte)EXIT};
+       // mChatService.write(msg);
         mChatService.stop();
-
-        A2_connect.mBtAdapter.disable();
         Intent intent = new Intent(this,A2_connect.class);
         startActivity(intent);
-
-
-    }
+        }
 }

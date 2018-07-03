@@ -501,6 +501,8 @@ public class BluetoothChatService {
 
         public void cancel() {
             try {
+                mmInStream.close();
+                mmOutStream.close();
                 mmSocket.close();
             } catch (IOException e) {
                 Log.e(TAG, "close() of connect socket failed", e);
