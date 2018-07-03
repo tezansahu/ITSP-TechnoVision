@@ -1,13 +1,12 @@
 import technovision_utils as utils
 
 fin=open("ip_address.txt","r")
-url=fin.read()
+url=fin.readline()[:-1]
+course=fin.readline()[:-1]
 fin.close()
 
 video_capture=utils.fetchLiveVideo(url)
 
-
-course="CS101"
 dates_list, roll_nos, attendance_list, known_face_encodings=utils.getDataFromBackend(course)
 print(roll_nos)
 print(len(known_face_encodings))

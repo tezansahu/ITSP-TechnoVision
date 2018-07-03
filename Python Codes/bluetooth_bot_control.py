@@ -116,10 +116,13 @@ while True:
         # This will block until we get a new connection
         client_sock, client_info = server_sock.accept()
         print("Accepted connection from ", client_info)
-        data = client_sock.recv(1024)
-        print("Received ", data.decode("utf-8"))
+        ip_addr = client_sock.recv(1024)
+        print("Received ", ip_addr.decode("utf-8"))
+        course = client_sock.recv(1024)
+        print("Received ", course.decode("utf-8"))
         # Write IP address received to file
-        fout.write(data.decode("utf-8"))
+        fout.write(ip_addr.decode("utf-8"))
+        fout.write(course.decode("utf-8"))
         
         fout.close()
         servo_loc=set_servo(servo_loc)
