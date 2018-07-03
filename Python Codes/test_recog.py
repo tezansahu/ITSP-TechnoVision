@@ -35,7 +35,7 @@ while True:
 		#print("Frame: "+str(frame_count))
 		for rno in studPresent:
 			stud_id=roll_nos.index(rno)+1
-			utils.markPresent(course, stud_id, attendance_list[stud_id-1])
+			utils.markPresent(course, stud_id, attendance_list[stud_id-1], dates_list)
 		tot_stud_present.extend(studPresent)
 		studPresent=[]
 		#print(tot_stud_present)
@@ -45,7 +45,7 @@ while True:
 		rem_rnos=list(set(roll_nos)-set(tot_stud_present))
 		for rno in rem_rnos:
 			stud_id=roll_nos.index(rno)+1
-			utils.markAbsent(course, stud_id, attendance_list[stud_id-1])
+			utils.markAbsent(course, stud_id, attendance_list[stud_id-1], dates_list)
 		break
 
 # Release handle to the IP Webcam Server

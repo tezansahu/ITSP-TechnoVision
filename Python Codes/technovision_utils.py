@@ -83,19 +83,23 @@ def locateToday(dates_list):
 
 
 # Mark the attendance of a person "Present" for the lecture
-def markPresent(course, id, attendance):
+def markPresent(course, id, attendance, dates_list):
     attendance=attendance.replace(" ","").replace("u","").replace("'","").replace("[","").replace("]","")
-    
-    attendance=attendance[0:attendance.find("NA")]+"P"+attendance[attendance.find("NA")+2:]
+    att_list=attendance.split(",")
+    att_list[locateToday(dates_list)]="P"
+    attendance=",".join(att_list)
+
     print(req.patch("http://technovision.pythonanywhere.com/Student_Data/"+course+"/"+str(id)+"/",data={"Attendance":attendance},auth=req.auth.HTTPBasicAuth('Tezan','technovision')))
     print("Update for id: "+str(id))
 
 
 # Mark the attendance of a person "Absent" for the lecture
-def markAbsent(course, id, attendance):
+def markAbsent(course, id, attendance, dates_list):
     attendance=attendance.replace(" ","").replace("u","").replace("'","").replace("[","").replace("]","")
-    
-    attendance=attendance[0:attendance.find("NA")]+"A"+attendance[attendance.find("NA")+2:]
+    att_list=attendance.split(",")
+    att_list[locateToday(dates_list)]="A"
+    attendance=",".join(att_list)
+
     req.patch("http://technovision.pythonanywhere.com/Student_Data/"+course+"/"+str(id)+"/",data={"Attendance":attendance},auth=req.auth.HTTPBasicAuth('Tezan','technovision'))
     print("Update Successful for id: "+str(id))    
 
