@@ -147,8 +147,8 @@ public class A2_Remote extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-      //  byte msg[] = {(byte)EXIT};
-      //  mChatService.write(msg);
+       byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         super.onBackPressed();
     }
@@ -157,8 +157,8 @@ public class A2_Remote extends AppCompatActivity {
 
 
     public void A2_signout(View view) {
-        //byte msg[] = {(byte)EXIT};
-        //mChatService.write(msg);
+        byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         //A2_connect.mBtAdapter.disable();
         Intent intent = new Intent(this,A1_Login.class);
@@ -168,8 +168,8 @@ public class A2_Remote extends AppCompatActivity {
     }
 
     public void A2_disconnect(View view) {
-       // byte msg[] = {(byte)EXIT};
-       // mChatService.write(msg);
+        byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         Intent intent = new Intent(this,A2_connect.class);
         startActivity(intent);
