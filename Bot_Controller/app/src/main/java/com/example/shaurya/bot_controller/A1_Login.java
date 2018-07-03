@@ -25,6 +25,7 @@ public class A1_Login extends AppCompatActivity {
     public static String IP_ADDRESS;
     public static String username;
     public static String password;
+    public static String course;
     public static boolean BT_ENABLED= false;
 
     Button loginbutton;
@@ -125,6 +126,7 @@ public class A1_Login extends AppCompatActivity {
                 Log.d("JSONobject","password matched");
                 EditText IP_address = (EditText) findViewById(R.id.A1_txt_IPadd);
                 IP_ADDRESS = IP_address.getText().toString();
+                course = jsonObject.getString("Prof_Course");
                 if (IP_ADDRESScheck())
                 {
                 Intent intent = new Intent(this, A2_connect.class);
