@@ -269,8 +269,10 @@ public class A2_connect extends Activity {
     };
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onBackPressed() {Intent intent = new Intent(A2_connect.this,A1_Login.class);
+        startActivity(intent);
+        finish();
+
     }
 
     public void logoutbutton(View view) {
