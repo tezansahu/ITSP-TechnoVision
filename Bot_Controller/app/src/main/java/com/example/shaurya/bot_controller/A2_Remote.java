@@ -22,6 +22,7 @@ public class A2_Remote extends AppCompatActivity {
     ImageView servoleft_image;
     ImageView servoright_image;
     String TAG = "BOT_CONTROLLER_A2_REMOTE";
+    String delimiter = ":";
 
 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -65,7 +66,8 @@ public class A2_Remote extends AppCompatActivity {
         byte[] msg1 = A1_Login.IP_ADDRESS.getBytes();
         mChatService.write(msg1);
         byte[] msg2 = A1_Login.course.getBytes();
-        mChatService.write(msg1);
+        mChatService.write(delimiter.getBytes());
+        mChatService.write(msg2);
 
 
         up_image.setOnTouchListener(mBotController);
