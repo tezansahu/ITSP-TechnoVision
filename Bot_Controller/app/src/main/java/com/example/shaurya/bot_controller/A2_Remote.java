@@ -22,6 +22,7 @@ public class A2_Remote extends AppCompatActivity {
     ImageView servoleft_image;
     ImageView servoright_image;
     String TAG = "BOT_CONTROLLER_A2_REMOTE";
+    String delimiter = ":";
 
 
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -65,7 +66,8 @@ public class A2_Remote extends AppCompatActivity {
         byte[] msg1 = A1_Login.IP_ADDRESS.getBytes();
         mChatService.write(msg1);
         byte[] msg2 = A1_Login.course.getBytes();
-        mChatService.write(msg1);
+        mChatService.write(delimiter.getBytes());
+        mChatService.write(msg2);
 
 
         up_image.setOnTouchListener(mBotController);
@@ -147,8 +149,8 @@ public class A2_Remote extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-      //  byte msg[] = {(byte)EXIT};
-      //  mChatService.write(msg);
+       byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         super.onBackPressed();
     }
@@ -157,8 +159,8 @@ public class A2_Remote extends AppCompatActivity {
 
 
     public void A2_signout(View view) {
-        //byte msg[] = {(byte)EXIT};
-        //mChatService.write(msg);
+        byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         //A2_connect.mBtAdapter.disable();
         Intent intent = new Intent(this,A1_Login.class);
@@ -168,8 +170,8 @@ public class A2_Remote extends AppCompatActivity {
     }
 
     public void A2_disconnect(View view) {
-       // byte msg[] = {(byte)EXIT};
-       // mChatService.write(msg);
+        byte msg[] = {(byte)EXIT};
+        mChatService.write(msg);
         mChatService.stop();
         Intent intent = new Intent(this,A2_connect.class);
         startActivity(intent);
