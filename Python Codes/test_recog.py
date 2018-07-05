@@ -2,8 +2,13 @@ import technovision_utils as utils
 
 # Open the file where IP webcam server address and Course are stored 
 fin=open("ip_address.txt","r")
-url=fin.readline()[:-1]
-course=fin.readline()[:-1]
+data=fin.read().split(":")
+url=data[0]
+print(url=="192.168.0.1")
+url="http://"+url+":8080/video"
+
+course=data[1][:-1]
+print(course)
 fin.close()
 
 # Start capturing live video from the URL
@@ -13,6 +18,8 @@ video_capture=utils.fetchLiveVideo(url)
 dates_list, roll_nos, attendance_list, known_face_encodings=utils.getDataFromBackend(course)
 #print(roll_nos)
 #print(len(known_face_encodings))
+#print(attendance_list[0])
+#print(dates_list)
 
 # Declare some lists/variables that would be useful throughout the process
 studPresent=[]
@@ -40,7 +47,7 @@ while True:
 		studPresent=[]
 		#print(tot_stud_present)
 
-	# If quitting condition is matched, set the attendance of all other studentsto "A"
+	# If quitting condition is matched, set the attendance of all other students to "A"
 	if utils.checkQuit():
 		rem_rnos=list(set(roll_nos)-set(tot_stud_present))
 		for rno in rem_rnos:
