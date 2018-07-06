@@ -102,6 +102,9 @@ advertise_service(server_sock, "RaspiBtSrv",
 
 stop()
 
+# Ensure that the file containing exiting condition for test_recog script is empty in the beginning
+if os.stat("/home/tezan/Tezan/ITSP-TechnoVision/Python Codes/exit_check.txt").st_size!=0:
+    open("exit_check.txt","w").close()
 
 # Main Bluetooth server loop
 while True:
@@ -150,7 +153,13 @@ while True:
                 servo_loc=servo_right(servo_loc)
             else:
                 stop()
-                time.sleep(1)    
+                time.sleep(1)
+                if data[0]==8:# When Connection is lost
+
+                    # Write the exiting text into a file for test_recog script to end
+                    fout2=open("exit_check.txt","w")
+                    fout2.write("EXIT FACE-RECOG SCRIPT")
+                    fout2.close()    
     except IOError:
         pass
 

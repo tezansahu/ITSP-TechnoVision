@@ -163,4 +163,8 @@ def closeWindows(video_capture):
 
 # Check if the quitting condition is matched
 def checkQuit():
-	return cv2.waitKey(1) & 0xFF == ord('q')
+	if os.stat("/home/tezan/Tezan/ITSP-TechnoVision/Python Codes/exit_check.txt").st_size!=0:
+        fin=open("exit_check.txt","r")
+        if fin.read()[:-1]=="EXIT FACE-RECOG SCRIPT":
+            return 1
+    return 0
