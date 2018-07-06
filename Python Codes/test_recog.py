@@ -1,15 +1,24 @@
 import technovision_utils as utils
+import os
 
-# Open the file where IP webcam server address and Course are stored 
-fin=open("ip_address.txt","r")
-data=fin.read().split(":")
-url=data[0]
-print(url=="192.168.0.1")
-url="http://"+url+":8080/video"
+# Open the file where IP webcam server address and Course are stored
+course=""
+url=""
+while True:
 
-course=data[1][:-1]
-print(course)
-fin.close()
+	# Check if the file contains data sent by bot controller app
+	if os.stat("/home/tezan/Tezan/ITSP-TechnoVision/Python Codes/ip_address.txt").st_size!=0: # Change the file address to the place where your "ip_address.txt" is stored
+		print("File not empty now") 
+		fin=open("ip_address.txt","r")
+		data=fin.read().split(":")
+		url=data[0]
+		print(url)
+		url="http://"+url+":8080/video"
+
+		course=data[1][:-1]
+		print(course)
+		fin.close()
+		break
 
 # Start capturing live video from the URL
 video_capture=utils.fetchLiveVideo(url)
