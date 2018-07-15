@@ -2,12 +2,10 @@
 
 ### <p align="right">-Team TechnoVision</p>
 
-For the Institute Technical Summer Project-2018, our team intends to build an Attendance System to record the attendance of all the students present that day who have registered for the course. It would consist of a bot, a database to store all relevant details, an app for students to check their attendance and also another app for the professor to control the bot via bluetooth
+For the Institute Technical Summer Project-2018, our team intended to build an Attendance Recording Bot that could use face recognition to mark the attendance of students while they are sitting for the lecture. We created an app for the students so that they get to check their attendance, which would be updated after the bot records their attendance. Another app, for the professor, to control the bot has also been developed by us.
+Currently, this bot can work in classrooms where there are a small number of students.
 
-In order to tackle the loopholes in the current methods of manual attendance and introduce tech in various schools and colleges, we came up with this idea to make a bot that could use face recognition to mark the attendance of students while they are sitting for the lecture. The app for the students would be such that they get to check their attendance which would be updated in our database immediately when the bot records their attendance.
-
-We would like to start for a small classroom with not many students to test this idea of ours.
-
+To check out the working of our project, follow the link: https://youtu.be/fqAU3uDpXJg
 
 ## TEAM TechnoVision:
 <pre>
